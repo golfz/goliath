@@ -9,9 +9,10 @@ import (
 )
 
 type TestStruct struct {
-	Id    int        `json:"id"     validate:"min=1,max=10"`
-	Email string     `json:"email"  validate:"required,email"`
-	Name  NameStruct `json:"name"   validate:"required"`
+	Id    int          `json:"id"     validate:"min=1,max=10"`
+	Email string       `json:"email"  validate:"required,email"`
+	My    NameStruct   `json:"my"     validate:"required"`
+	Name  []NameStruct `json:"name"   validate:"required,dive,required"`
 }
 
 type NameStruct struct {
@@ -21,12 +22,26 @@ type NameStruct struct {
 
 func main() {
 	s := TestStruct{
-		Id:    18,
-		Email: "GolF@gmail.com",
+		Id:    9,
+		Email: "fasdf@asdf.asfd",
+		My: NameStruct{
+			FirstName: "asdfsdff",
+			LastName:  "asdfsdff",
+		},
+		Name: []NameStruct{
+			{
+				FirstName: "asdfsdff",
+				LastName:  "asdfsdff",
+			},
+			{
+				FirstName: "",
+				LastName:  "asdfsdff",
+			},
+		},
 	}
+
 	if err := goliath.Validate(s); err != nil {
 
-		fmt.Printf("%#v \n", err)
 		e := viewmodel.Error{}
 		if err := goliath.NewStructMapper().From(err).To(&e); err != nil {
 			fmt.Println(err)
