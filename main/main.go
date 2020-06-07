@@ -41,7 +41,6 @@ func main() {
 	}
 
 	if err := goliath.Validate(s); err != nil {
-
 		e := viewmodel.Error{}
 		if err := goliath.NewStructMapper().From(err).To(&e); err != nil {
 			fmt.Println(err)
