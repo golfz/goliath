@@ -17,7 +17,12 @@ type TestStruct struct {
 
 type NameStruct struct {
 	FirstName string `json:"first_name" validate:"min=5,max=10"`
-	LastName  string `json:"last_name"  validate:"min=5,max=10"`
+	LastName  LastNameStruct `json:"last_name"  validate:"min=5,max=10"`
+}
+
+type LastNameStruct struct {
+	FamilyName string `json:"family_name" validate:"min=5,max=10"`
+	OwnName    string `json:"own_name" validate:"min=5,max=10"`
 }
 
 func main() {
@@ -26,16 +31,25 @@ func main() {
 		Email: "fasdf@asdf.asfd",
 		My: NameStruct{
 			FirstName: "asdfsdff",
-			LastName:  "asdfsdff",
+			LastName:  LastNameStruct{
+				FamilyName: "asdfsdff",
+				OwnName:    "asdfsdff",
+			},
 		},
 		Name: []NameStruct{
 			{
 				FirstName: "asdfsdff",
-				LastName:  "asdfsdff",
+				LastName:  LastNameStruct{
+					FamilyName: "asdfsdff",
+					OwnName:    "asdfsdff",
+				},
 			},
 			{
-				FirstName: "",
-				LastName:  "asdfsdff",
+				FirstName: "asdfsdff",
+				LastName:  LastNameStruct{
+					FamilyName: "",
+					OwnName:    "asdfsdff",
+				},
 			},
 		},
 	}
