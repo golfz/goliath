@@ -24,7 +24,7 @@ func Validate(v interface{}) output.GoliathError {
 				Type:    "validation",
 				Code:    fmt.Sprintf("validation-error"),
 				Error:   fmt.Sprintf("Validation error"),
-				Message: fmt.Sprintf("Cannot validate data."),
+				Message: fmt.Sprintf("Cannot validate data. The input may not be struct (The outermost input must not be an array)."),
 				ErrorDev: output.ErrorDev{
 					Error:      errorStr,
 					Stacktrace: stack,
@@ -36,20 +36,6 @@ func Validate(v interface{}) output.GoliathError {
 			stack := string(debug.Stack())
 			errorStr := fmt.Sprint(err)
 			jsons := getJsonTag(v, err.StructNamespace())
-
-			//fmt.Println("-----------------")
-			//fmt.Println("eStr: ", errorStr)
-			//fmt.Println("Namespace: ", err.Namespace())
-			//fmt.Println("ActualTag: ", err.ActualTag())
-			//fmt.Println("Field: ", err.Field())
-			//fmt.Println("Tag: ", err.Tag())
-			//fmt.Println("Kind: ", err.Kind())
-			//fmt.Println("Param: ", err.Param())
-			//fmt.Println("StructField: ", err.StructField())
-			//fmt.Println("StructNamespace: ", err.StructNamespace())
-			//fmt.Println("Type: ", err.Type())
-			//fmt.Println("Value: ", err.Value())
-			//fmt.Println("+++++++++++++++++++")
 
 			return &output.Error{
 				Status:  http.StatusBadRequest,
