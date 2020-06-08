@@ -6,14 +6,14 @@ import (
 	"net/http"
 )
 
-type jsonRestfulView struct {
-	writer http.ResponseWriter
+type JsonRestfulView struct {
+	Writer http.ResponseWriter
 }
 
-func (v *jsonRestfulView) Write(header viewmodel.HttpHeader, body interface{}) {
-	v.writer.Header().Set("Content-Type", "application/json")
-	v.writer.WriteHeader(header.StatusCode)
+func (v *JsonRestfulView) Write(header viewmodel.HttpHeader, body interface{}) {
+	v.Writer.Header().Set("Content-Type", "application/json")
+	v.Writer.WriteHeader(header.StatusCode)
 	if body != nil {
-		json.NewEncoder(v.writer).Encode(body)
+		json.NewEncoder(v.Writer).Encode(body)
 	}
 }
