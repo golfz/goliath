@@ -6,6 +6,7 @@ import (
 
 type GoliathError interface {
 	Errors() Error
+	SetStatus(s int)
 }
 
 type Error struct {
@@ -20,6 +21,10 @@ type Error struct {
 
 func (e *Error) Errors() Error {
 	return *e
+}
+
+func (e *Error) SetStatus(s int) {
+	e.Status = s
 }
 
 type ErrorDev struct {
