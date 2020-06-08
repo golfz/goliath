@@ -1,5 +1,5 @@
 package output
 
-type Status struct {
+type ResponseStatus struct {
 	ResponseCode int
 }
