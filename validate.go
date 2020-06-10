@@ -37,6 +37,13 @@ func Validate(v interface{}) output.GoliathError {
 			errorStr := fmt.Sprint(err)
 			jsons := getJsonTag(v, err.StructNamespace())
 
+			if err.Kind() == reflect.String {
+				v := reflect.ValueOf(err.Value()).String()
+				if strings.TrimSpace(v) == "" {
+					continue
+				}
+			}
+
 			return &output.Error{
 				Status:  http.StatusBadRequest,
 				Time:    time.Now(),
