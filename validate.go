@@ -39,7 +39,7 @@ func Validate(v interface{}) output.GoliathError {
 
 			if err.Kind() == reflect.String {
 				v := reflect.ValueOf(err.Value()).String()
-				if strings.TrimSpace(v) == "" {
+				if v == "" && err.ActualTag() != "required" {
 					continue
 				}
 			}
