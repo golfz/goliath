@@ -13,8 +13,8 @@ type ErrorPresenter struct {
 func (p *ErrorPresenter) PresentError(err output.GoliathError) {
 	h := viewmodel.HttpHeader{
 		StatusCode:    err.Errors().Status,
-		Authorization: nil,
-		ContentType:   nil,
+		Authorization: "",
+		ContentType:   "",
 	}
 	p.View.Write(h, err)
 }
