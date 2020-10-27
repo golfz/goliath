@@ -1,1 +1,7 @@
-package goliath
+package main
+
+import "log"
+
+func main() {
+	log.Println("Test Hello world")
+}

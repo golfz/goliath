@@ -1,6 +1,6 @@
 module github.com/golfz/goliath
 
-go 1.14
+go 1.15
 
 require (
 	github.com/go-playground/validator/v10 v10.3.0

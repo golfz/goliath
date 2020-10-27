@@ -1,4 +1,4 @@
-package goliath
+package xutils
 
 import (
 	"fmt"
