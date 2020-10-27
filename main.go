@@ -51,7 +51,3 @@ func help(args []string) {
 		printMenu()
 	}
 }
-
-func create(args []string) {
-	fmt.Println(args)
-}
