@@ -8,17 +8,25 @@ import (
 func main() {
 	args := os.Args[1:]
 
-	if len(args) == 0  {
-		printHelp()
+	if len(args) == 0 {
+		printMenu()
 		return
 	}
 
-	//args[]
+	command := args[0]
+
+	switch command {
+	case "create":
+		create(args[1:])
+	case "help":
+		help(args[1:])
+	default:
+		printUnknownCommand(command)
+	}
 }
 
-func printHelp() {
-	fmt.Println(`
-Goliath is a tool for help you to develop go project as a clean architecture
+func printMenu() {
+	fmt.Println(`Goliath is a tool for help you to develop go project as a clean architecture
 
 Usage:
 	goliath <command> [arguments]
@@ -26,9 +34,24 @@ Usage:
 The <command> are:
 	
 	create		create something 
-	update		update goliath project structure
 	version 	print Goliath version
 
 Use "goliath help <command>" for more information about a command.
 		`)
+}
+
+func printUnknownCommand(command string) {
+	s := fmt.Sprintf(`goliath %s: unknown command
+Run 'goliath help' for usage.`, command)
+	fmt.Println(s)
+}
+
+func help(args []string) {
+	if len(args) == 0 {
+		printMenu()
+	}
+}
+
+func create(args []string) {
+	fmt.Println(args)
 }
