@@ -1,5 +1,5 @@
 # goliath
-golang clean framwork (testing)
+golang library สำหรับช่วยเขียน Go ให้ง่ายขึ้น ใช้เวลาในการเขียนน้อยลง 
 
 ## Feature
 - Validate
