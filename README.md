@@ -16,4 +16,4 @@ golang clean framwork (testing)
 ```
 /employee?country=thailand&salary=gt:30000&age=gte:30,lt:40
 ```
-
+ส่วนของ value ของ query string จะอยู่ในรูปแบบ **filter-tag**:_**filter-value**_
