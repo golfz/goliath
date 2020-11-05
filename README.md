@@ -50,5 +50,5 @@ eq เป็น filter-tag พิเศษที่จะใส่ tag หรื
 ##### 2. not
 คือการ filter แบบ **ไม่เท่ากับ**
 
-**รูปแบบการใช้งาน :** not:value` เช่น `color=not:red` หรือ `country=not:usa,not=canada`
+**รูปแบบการใช้งาน :** `not:value` เช่น `color=not:red` หรือ `country=not:usa,not=canada`
 
