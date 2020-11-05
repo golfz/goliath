@@ -12,4 +12,8 @@ golang clean framwork (testing)
 3. Limit
 
 ### 1. Filter
+ตัวอย่างการใช้งาน
+```
+/employee?country=thailand&salary=gt:30000&age=gte:30,lt:40
+```
 
