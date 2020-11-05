@@ -87,9 +87,13 @@ eq เป็น filter-tag พิเศษที่จะใส่ tag หรื
 
 ---
 
+> **หมายเหตุ** 
+>
 > เราสามารถใช้ gt, gte, lt, lte ร่วมกันได้
 >
 > โดยจะมีผลเหมือนการ `AND` กันของ SQL เช่น
 > 
-> `/user?age=gte:20,lt:30`
+> `/user?age=gte:20,lt:30` หมายถึงการ filter ข้อมูล user ที่มีเงื่อนไข `20 ≤ age < 30`
+>
+> เทียบกับการเขียน `SQL` คือ `SELECT * FROM user WHERE age>=20 AND age<30`
 > 
