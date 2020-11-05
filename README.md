@@ -46,3 +46,9 @@ eq เป็น filter-tag พิเศษที่จะใส่ tag หรื
 /employee?country=eq:thailand
 ```
 ซึ่งการออกแบบให้ไม่ต้องใส่ tag ก็ได้ เพื่อให้เหมือนกับการเขียน query string ตามปกติที่ `/employee?country=thailand` ก็มีความว่า country ต้องเท่ากับ thailand อยู่แล้ว ซึ่งเหมือนกับการใส่ tag ในรูปแบบนี้ `/employee?country=eq:thailand`
+
+##### 2. not
+คือการ filter แบบ **ไม่เท่ากับ**
+
+**รูปแบบการใช้งาน :** not:value` เช่น `color=not:red` หรือ `country=not:usa,not=canada`
+
