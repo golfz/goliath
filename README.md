@@ -162,3 +162,9 @@ name=like:~a~d~
 
 ---
 
+### 2. Sort
+โดยใช้ field ชื่อ `sort_by` ตัวอย่างการใช้งาน
+```
+/employee?sort_by=firstname:asc,age:desc
+```
+ส่วนของ value ของ query string จะอยู่ในรูปแบบ **field-name1** : _**asc|desc**_ , ... , **field-nameN** : _**asc|desc**_
