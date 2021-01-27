@@ -1,9 +1,9 @@
-package goliath
+package utils
 
 import (
 	"fmt"
 	"github.com/go-playground/validator/v10"
-	"github.com/golfz/goliath/x/data/output"
+	"github.com/golfz/goliath/cleanarch/data/output"
 	"net/http"
 	"reflect"
 	"runtime/debug"

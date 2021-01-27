@@ -1,8 +1,8 @@
-package goliath
+package utils
 
 import (
 	"fmt"
-	"github.com/golfz/goliath/x/data/output"
+	"github.com/golfz/goliath/cleanarch/data/output"
 	"github.com/jinzhu/copier"
 	"net/http"
 	"runtime/debug"
