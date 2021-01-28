@@ -1,10 +1,10 @@
-package main
+package test
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/golfz/goliath"
-	"github.com/golfz/goliath/x/data/viewmodel"
+	"github.com/golfz/goliath/cleanarch/data/viewmodel"
+	"github.com/golfz/goliath/utils"
 	"log"
 )
 
@@ -54,9 +54,9 @@ func main() {
 		},
 	}
 
-	if err := goliath.Validate(s); err != nil {
+	if err := utils.Validate(s); err != nil {
 		e := viewmodel.Error{}
-		if err := goliath.NewStructMapper().From(err).To(&e); err != nil {
+		if err := utils.NewStructMapper().From(err).To(&e); err != nil {
 			fmt.Println(err)
 		}
 		prettyJson, err := json.MarshalIndent(e, "", "  ")

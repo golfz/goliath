@@ -1,9 +1,9 @@
 package presenter
 
 import (
-	"github.com/golfz/goliath/x/data/output"
-	"github.com/golfz/goliath/x/data/viewmodel"
-	"github.com/golfz/goliath/x/interfaces/view/restful/json"
+	"github.com/golfz/goliath/cleanarch/data/output"
+	"github.com/golfz/goliath/cleanarch/data/viewmodel"
+	"github.com/golfz/goliath/cleanarch/interfaces/view/restful/json"
 )
 
 type ErrorPresenter struct {
