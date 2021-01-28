@@ -2,7 +2,7 @@ package json
 
 import (
 	"encoding/json"
-	"github.com/golfz/goliath/x/data/viewmodel"
+	"github.com/golfz/goliath/cleanarch/data/viewmodel"
 	"net/http"
 )
 

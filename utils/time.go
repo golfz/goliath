@@ -1,8 +1,8 @@
-package xutils
+package utils
 
 import (
 	"fmt"
-	"github.com/golfz/goliath/x/data/output"
+	"github.com/golfz/goliath/cleanarch/data/output"
 	"net/http"
 	"runtime/debug"
 	"time"
@@ -26,8 +26,8 @@ func (t *Time) ChangeTimezone(tz string) (time.Time, output.GoliathError) {
 		return time.Time{}, &output.Error {
 			Status:  http.StatusInternalServerError,
 			Time:    time.Now(),
-			Type:    "xutils",
-			Code:    "xutils-TimeUtil.ChangeTimezone",
+			Type:    "utils",
+			Code:    "utils-TimeUtil.ChangeTimezone",
 			Error:   "Cannot convert time correctly",
 			Message: "Cannot convert time correctly",
 			ErrorDev: output.ErrorDev{
