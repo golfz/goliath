@@ -15,7 +15,12 @@ func TestTakeSliceArg(t *testing.T) {
 		wantOut []interface{}
 		wantOk  bool
 	}{
-		// TODO: Add test cases.
+		{
+			name:    "arg is not slice, expect ok = false",
+			args:    args{arg: 1},
+			wantOut: nil,
+			wantOk:  false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

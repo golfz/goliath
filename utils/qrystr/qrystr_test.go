@@ -1,9 +1,9 @@
 package qrystr
 
 import (
+	"github.com/golfz/goliath/utils/sliceutils"
 	"github.com/openlyinc/pointy"
 	"github.com/stretchr/testify/assert"
-	"mastertime-service/utils/sliceutils"
 	"net/http/httptest"
 	"testing"
 )
