@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/golfz/goliath/cleanarch/data/viewmodel"
-	"github.com/golfz/goliath/utils"
+	"github.com/golfz/goliath/utils/structmapper"
+	"github.com/golfz/goliath/utils/validator"
 	"log"
 )
 
@@ -54,9 +55,9 @@ func main() {
 		},
 	}
 
-	if err := utils.Validate(s); err != nil {
+	if err := validator.Validate(s); err != nil {
 		e := viewmodel.Error{}
-		if err := utils.NewStructMapper().From(err).To(&e); err != nil {
+		if err := structmapper.NewStructMapper().From(err).To(&e); err != nil {
 			fmt.Println(err)
 		}
 		prettyJson, err := json.MarshalIndent(e, "", "  ")
