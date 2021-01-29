@@ -1,6 +1,7 @@
 package output
 
 import (
+	"runtime/debug"
 	"time"
 )
 
@@ -30,4 +31,19 @@ func (e *Error) SetStatus(s int) {
 type ErrorDev struct {
 	Error      string
 	Stacktrace string
+}
+
+func SmallError(status int, code string, errType string, msg string) GoliathError {
+	return &Error{
+		Status:   status,
+		Time:     time.Now(),
+		Type:     errType,
+		Code:     code,
+		Error:    msg,
+		Message:  msg,
+		ErrorDev: ErrorDev{
+			Error:      msg,
+			Stacktrace: string(debug.Stack()),
+		},
+	}
 }
