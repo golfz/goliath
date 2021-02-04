@@ -17,6 +17,16 @@ type AuthContextor interface {
 	GetBearerToken(auth string) (string, output.GoliathError)
 }
 
+type TokenValidator interface {
+	IsValidRefreshToken(token string) (bool, output.GoliathError)
+	IsValidAccessToken(token string) (bool, output.GoliathError)
+}
+
+type TokenCreator interface {
+	createRefreshToken(token string) (bool, output.GoliathError)
+	createAccessToken(token string) (bool, output.GoliathError)
+}
+
 func (ctx *authContext) GetAuthToken() (string, output.GoliathError) {
 	auth := ctx.request.Header.Get("authorization")
 
