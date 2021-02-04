@@ -22,7 +22,7 @@ func Test_isBearerAuth(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := isBearerAuth(tt.args.s); got != tt.want {
-				t.Errorf("isBearerAuth() = %v, want %v", got, tt.want)
+				t.Errorf("isBearerAuth() = %v, auth %v", got, tt.want)
 			}
 		})
 	}
