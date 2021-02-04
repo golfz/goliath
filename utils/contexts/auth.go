@@ -61,6 +61,4 @@ func (ctx *authContext) GetBearerToken(s string) (string, output.GoliathError) {
 	s = strings.Replace(s, bearerStartPattern, "", 1)
 
 	return s, nil
-
 }
-
