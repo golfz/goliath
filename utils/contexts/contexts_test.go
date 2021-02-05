@@ -17,16 +17,16 @@ func Test_goliathContext_Auth(t *testing.T) {
 	r := httptest.NewRequest("GET", "/", nil)
 	ctx1 := NewGoliathContext(r)
 
-	auth1 := ctx1.Auth()
-	auth2 := ctx1.Auth()
+	auth1 := ctx1.AuthContext()
+	auth2 := ctx1.AuthContext()
 
 	if auth1 != auth2 {
-		t.Errorf("Auth() want same authContext object, got different")
+		t.Errorf("AuthContext() want same authContext object, got different")
 	}
 
 	ctx2 := NewGoliathContext(r)
-	auth3 := ctx2.Auth()
+	auth3 := ctx2.AuthContext()
 	if auth3 == auth1 {
-		t.Errorf("Auth() want different authContext object, got same")
+		t.Errorf("AuthContext() want different authContext object, got same")
 	}
 }
