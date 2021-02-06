@@ -13,29 +13,19 @@ type authContext struct {
 }
 
 type AuthContextor interface {
-	GetAuthToken() (string, output.GoliathError)
-	GetBearerToken(auth string) (string, output.GoliathError)
+	GetAuthorizationHeader() (string, output.GoliathError)
+	GetBearerToken() (string, output.GoliathError)
 }
 
-type TokenValidator interface {
-	IsValidRefreshToken(token string) (bool, output.GoliathError)
-	IsValidAccessToken(token string) (bool, output.GoliathError)
-}
-
-type TokenCreator interface {
-	createRefreshToken(token string) (bool, output.GoliathError)
-	createAccessToken(token string) (bool, output.GoliathError)
-}
-
-func (ctx *authContext) GetAuthToken() (string, output.GoliathError) {
-	auth := ctx.request.Header.Get("authorization")
+func (ctx *authContext) GetAuthorizationHeader() (string, output.GoliathError) {
+	auth := ctx.request.Header.Get("Authorization")
 
 	if strings.TrimSpace(auth) == "" {
 		return "", &output.Error{
 			Status:  http.StatusUnauthorized,
 			Time:    time.Now(),
 			Type:    "goliath",
-			Code:    "goliath.context.GetAuthToken.no-auth-header",
+			Code:    "goliath.context.GetAuthorizationHeader.no-auth-header",
 			Error:   "empty authorization header",
 			Message: "empty authorization header",
 			ErrorDev: output.ErrorDev{
@@ -50,10 +40,15 @@ func (ctx *authContext) GetAuthToken() (string, output.GoliathError) {
 	return auth, nil
 }
 
-func (ctx *authContext) GetBearerToken(s string) (string, output.GoliathError) {
-	s = strings.TrimSpace(s)
+func (ctx *authContext) GetBearerToken() (string, output.GoliathError) {
+	rawToken, err := ctx.GetAuthorizationHeader()
+	if err != nil {
+		return "", err
+	}
 
-	if !isBearerAuth(s) {
+	rawToken = strings.TrimSpace(rawToken)
+
+	if !isBearerAuth(rawToken) {
 		return "", &output.Error{
 			Status:  http.StatusUnauthorized,
 			Time:    time.Now(),
@@ -68,7 +63,7 @@ func (ctx *authContext) GetBearerToken(s string) (string, output.GoliathError) {
 		}
 	}
 
-	s = strings.Replace(s, bearerStartPattern, "", 1)
+	rawToken = strings.Replace(rawToken, bearerStartPattern, "", 1)
 
-	return s, nil
+	return rawToken, nil
 }
