@@ -6,21 +6,15 @@ import (
 	"testing"
 )
 
-func TestNewGoliathContext(t *testing.T) {
-	r := httptest.NewRequest("GET", "/", nil)
-	got := NewGoliathContext(nil, r)
-	if got == nil {
-		t.Errorf("NewGoliathContext() want something, got nil")
-	}
-}
-
 func Test_GetResponseWriter(t *testing.T) {
 	h := http.Header{}
 	h.Set("Key-test", "value-test")
-	mc := mockWriter{
+	w := mockWriter{
 		header: &h,
 	}
-	ctx := NewGoliathContext(mc, nil)
+	ctx := GoliathContext{
+		Writer: w,
+	}
 	got := ctx.GetResponseWriter()
 	if got.Header().Get("Key-test") != "value-test" {
 		t.Errorf("GetResponseWriter() expect same w value, got different")
@@ -29,7 +23,9 @@ func Test_GetResponseWriter(t *testing.T) {
 
 func Test_GetRequest(t *testing.T) {
 	r := httptest.NewRequest("GET", "/expect", nil)
-	ctx := NewGoliathContext(nil, r)
+	ctx := GoliathContext{
+		Request: r,
+	}
 
 	got := ctx.GetRequest()
 	if got != r {
@@ -39,19 +35,23 @@ func Test_GetRequest(t *testing.T) {
 
 func Test_goliathContext_AuthContext(t *testing.T) {
 	r := httptest.NewRequest("GET", "/", nil)
-	ctx1 := NewGoliathContext(nil, r)
-
-	auth1 := ctx1.AuthContext()
-	auth2 := ctx1.AuthContext()
-
-	if auth1 != auth2 {
-		t.Errorf("AuthContext() want same authContext object, got different")
+	ctx1 := GoliathContext{
+		Request: r,
 	}
 
-	ctx2 := NewGoliathContext(nil, r)
-	auth3 := ctx2.AuthContext()
+	auth1 := ctx1.GetAuthContext()
+	auth2 := ctx1.GetAuthContext()
+
+	if auth1 != auth2 {
+		t.Errorf("GetAuthContext() want same authContext object, got different")
+	}
+
+	ctx2 := GoliathContext{
+		Request: r,
+	}
+	auth3 := ctx2.GetAuthContext()
 	if auth3 == auth1 {
-		t.Errorf("AuthContext() want different authContext object, got same")
+		t.Errorf("GetAuthContext() want different authContext object, got same")
 	}
 }
 

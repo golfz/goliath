@@ -1,36 +1,34 @@
 package contexts
 
 import (
+	"database/sql"
 	"net/http"
 )
 
-type goliathContext struct {
-	writer      http.ResponseWriter
-	request     *http.Request
+type GoliathContext struct {
+	Writer      http.ResponseWriter
+	Request     *http.Request
+	Db          *sql.DB
 	authContext *authContext
-}
-
-func NewGoliathContext(w http.ResponseWriter, r *http.Request) *goliathContext {
-	return &goliathContext{writer: w, request: r}
 }
 
 type GoliathContextor interface {
 	GetResponseWriter() http.ResponseWriter
 	GetRequest() *http.Request
-	AuthContext() *authContext
+	GetAuthContext() *authContext
 }
 
-func (ctx *goliathContext) GetResponseWriter() http.ResponseWriter {
-	return ctx.writer
+func (ctx *GoliathContext) GetResponseWriter() http.ResponseWriter {
+	return ctx.Writer
 }
 
-func (ctx *goliathContext) GetRequest() *http.Request {
-	return ctx.request
+func (ctx *GoliathContext) GetRequest() *http.Request {
+	return ctx.Request
 }
 
-func (ctx *goliathContext) AuthContext() *authContext {
+func (ctx *GoliathContext) GetAuthContext() *authContext {
 	if ctx.authContext == nil {
-		ctx.authContext = &authContext{request: ctx.request}
+		ctx.authContext = &authContext{request: ctx.Request}
 	}
 	return ctx.authContext
 }
