@@ -17,6 +17,7 @@ type GoliathContextor interface {
 	GetRequest() *http.Request
 	GetDbSession() *sql.DB
 	GetAuthContext() *authContext
+	GetLogId() string
 }
 
 func (ctx *GoliathContext) GetResponseWriter() http.ResponseWriter {
@@ -36,4 +37,8 @@ func (ctx *GoliathContext) GetAuthContext() *authContext {
 		ctx.authContext = &authContext{request: ctx.Request}
 	}
 	return ctx.authContext
+}
+
+func (ctx *GoliathContext) GetLogId() string {
+	return ctx.GetRequest().Context().Value("RequestID").(string)
 }
