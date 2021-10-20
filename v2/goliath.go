@@ -12,7 +12,7 @@ type Goliath interface {
 	// SetRequest sets `*http.Request`.
 	SetRequest(r *http.Request)
 
-	// SetResponse sets `http.ResponseWriter`.
+	// SetResponseWriter sets `http.ResponseWriter`.
 	SetResponseWriter(w http.ResponseWriter)
 
 	// Response returns `http.ResponseWriter`.
