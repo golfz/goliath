@@ -1,6 +1,7 @@
 package goliath
 
 import (
+	"runtime/debug"
 	"time"
 )
 
@@ -41,11 +42,27 @@ type errorData struct {
 }
 
 type errorDev struct {
+	Error      string `json:"error"`
 	Stacktrace string `json:"stacktrace"`
 }
 
 // NewError create a new errorData
-func NewError() *errorData {
+func NewError(status int, errCode string, errArgs map[string]interface{}, err error, logID string, optionalMsg string) *errorData {
+	return &errorData{
+		Status:    status,
+		Message:   optionalMsg,
+		Time:      time.Now(),
+		LogID:     logID,
+		ErrorCode: errCode,
+		ErrorArgs: errArgs,
+		ErrorDev: errorDev{
+			Error:      err.Error(),
+			Stacktrace: string(debug.Stack()),
+		},
+	}
+}
+
+func NewErrorEmpty() *errorData {
 	return &errorData{}
 }
 
