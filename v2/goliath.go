@@ -38,7 +38,7 @@ type goliath struct {
 	logID   string
 }
 
-func New() *goliath {
+func New() Goliath {
 	return &goliath{}
 }
 
