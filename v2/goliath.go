@@ -12,8 +12,8 @@ type Goliath interface {
 	// SetRequest sets `*http.Request`.
 	SetRequest(r *http.Request)
 
-	// SetResponse sets `http.ResponseWriter`.
-	SetResponse(w http.ResponseWriter)
+	// SetResponseWriter sets `http.ResponseWriter`.
+	SetResponseWriter(w http.ResponseWriter)
 
 	// Response returns `http.ResponseWriter`.
 	Response() http.ResponseWriter
@@ -38,36 +38,40 @@ type goliath struct {
 	logID   string
 }
 
-func New() *goliath {
+func New() Goliath {
 	return &goliath{}
 }
 
 func (g *goliath) Request() *http.Request {
-	panic("implement me")
+	return g.request
 }
 
 func (g *goliath) SetRequest(r *http.Request) {
-	panic("implement me")
+	g.request = r
+	logID, ok := g.request.Context().Value(ContextLogIdKey).(string)
+	if ok {
+		g.logID = logID
+	}
 }
 
-func (g *goliath) SetResponse(w http.ResponseWriter) {
-	panic("implement me")
+func (g *goliath) SetResponseWriter(w http.ResponseWriter) {
+	g.writer = w
 }
 
 func (g *goliath) Response() http.ResponseWriter {
-	panic("implement me")
+	return g.writer
 }
 
 func (g *goliath) SetDBConnection(db *sql.DB) {
-	panic("implement me")
+	g.db = db
 }
 
 func (g *goliath) DB() *sql.DB {
-	panic("implement me")
+	return g.db
 }
 
 func (g *goliath) SetLogID(logID string) {
-
+	g.logID = logID
 }
 
 func (g *goliath) LogID() string {
