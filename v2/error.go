@@ -6,9 +6,6 @@ import (
 )
 
 type Error interface {
-	// Data returns `interface{}`
-	Data() interface{}
-
 	// SetStatus sets `int`
 	SetStatus(status int)
 
@@ -27,8 +24,8 @@ type Error interface {
 	// SetErrorArg sets a pair of `(string, interface{})`
 	SetErrorArg(key string, v interface{})
 
-	// SetStacktrace sets `string`
-	SetStacktrace(s string)
+	// SetError sets `error`
+	SetError(err error)
 }
 
 type goliathError struct {
@@ -74,10 +71,6 @@ func (e *goliathError) Unwrap() error {
 	return e.err
 }
 
-func (e *goliathError) Data() interface{} {
-	return e
-}
-
 func (e *goliathError) SetStatus(status int) {
 	e.Status = status
 }
@@ -102,8 +95,7 @@ func (e *goliathError) SetErrorArg(key string, v interface{}) {
 	e.ErrorArgs[key] = v
 }
 
-func (e *goliathError) SetStacktrace(s string) {
-	e.ErrorDev.Stacktrace = s
+func (e *goliathError) SetError(err error) {
+	e.err = err
+	e.ErrorDev.Error = err.Error()
 }
-
-
