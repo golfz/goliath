@@ -31,7 +31,7 @@ type Error interface {
 	SetStacktrace(s string)
 }
 
-type errorData struct {
+type goliathError struct {
 	Status    int                    `json:"status"`
 	Message   string                 `json:"message"`
 	Time      time.Time              `json:"time"`
@@ -39,6 +39,7 @@ type errorData struct {
 	ErrorCode string                 `json:"error_code"`
 	ErrorArgs map[string]interface{} `json:"error_args"`
 	ErrorDev  errorDev               `json:"error_dev"`
+	err       error
 }
 
 type errorDev struct {
@@ -46,9 +47,9 @@ type errorDev struct {
 	Stacktrace string `json:"stacktrace"`
 }
 
-// NewError create a new errorData
-func NewError(status int, errCode string, errArgs map[string]interface{}, err error, logID string, optionalMsg string) *errorData {
-	return &errorData{
+// NewError create a new goliathError
+func NewError(status int, errCode string, errArgs map[string]interface{}, err error, logID string, optionalMsg string) *goliathError {
+	return &goliathError{
 		Status:    status,
 		Message:   optionalMsg,
 		Time:      time.Now(),
@@ -59,45 +60,50 @@ func NewError(status int, errCode string, errArgs map[string]interface{}, err er
 			Error:      err.Error(),
 			Stacktrace: string(debug.Stack()),
 		},
+		err: err,
 	}
 }
 
-func NewErrorEmpty() *errorData {
-	return &errorData{}
-}
-
-func (e *errorData) Error() string {
+// Error implements `error interface` form `builtin` package
+func (e *goliathError) Error() string {
 	return e.Message
 }
 
-func (e *errorData) Data() interface{} {
+// Unwrap implements `Wrapper interface` from `xerrors` package
+func (e *goliathError) Unwrap() error {
+	return e.err
+}
+
+func (e *goliathError) Data() interface{} {
 	return e
 }
 
-func (e *errorData) SetStatus(status int) {
+func (e *goliathError) SetStatus(status int) {
 	e.Status = status
 }
 
-func (e *errorData) SetMessage(msg string) {
+func (e *goliathError) SetMessage(msg string) {
 	e.Message = msg
 }
 
-func (e *errorData) SetLogID(logID string) {
+func (e *goliathError) SetLogID(logID string) {
 	e.LogID = logID
 }
 
-func (e *errorData) SetErrorCode(errorCode string) {
+func (e *goliathError) SetErrorCode(errorCode string) {
 	e.ErrorCode = errorCode
 }
 
-func (e *errorData) SetErrorArgs(args map[string]interface{}) {
+func (e *goliathError) SetErrorArgs(args map[string]interface{}) {
 	e.ErrorArgs = args
 }
 
-func (e *errorData) SetErrorArg(key string, v interface{}) {
+func (e *goliathError) SetErrorArg(key string, v interface{}) {
 	e.ErrorArgs[key] = v
 }
 
-func (e *errorData) SetStacktrace(s string) {
+func (e *goliathError) SetStacktrace(s string) {
 	e.ErrorDev.Stacktrace = s
 }
+
+
