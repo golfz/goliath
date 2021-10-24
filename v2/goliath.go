@@ -7,11 +7,11 @@ import (
 )
 
 type Goliath interface {
-	// Request returns `*http.Request`.
-	Request() *http.Request
-
 	// SetRequest sets `*http.Request`.
 	SetRequest(r *http.Request)
+
+	// Request returns `*http.Request`.
+	Request() *http.Request
 
 	// SetResponseWriter sets `http.ResponseWriter`.
 	SetResponseWriter(w http.ResponseWriter)
@@ -43,16 +43,16 @@ func New() Goliath {
 	return &goliath{}
 }
 
-func (g *goliath) Request() *http.Request {
-	return g.request
-}
-
 func (g *goliath) SetRequest(r *http.Request) {
 	g.request = r
 	logID, ok := g.request.Context().Value(ContextLogIdKey).(string)
 	if ok {
 		g.logID = logID
 	}
+}
+
+func (g *goliath) Request() *http.Request {
+	return g.request
 }
 
 func (g *goliath) SetResponseWriter(w http.ResponseWriter) {
