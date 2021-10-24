@@ -7,7 +7,7 @@ import (
 )
 
 type user struct {
-	Name  string `validate:"required,min=1"`
+	Name  *string `validate:"required,min=1"`
 	Age   uint8  `validate:"gte=18,lte=130"`
 	Email string `validate:"required,email"`
 	Address Address
@@ -18,8 +18,9 @@ type Address struct {
 }
 
 func TestStruct(t *testing.T) {
+	name := "Marc"
 	u := user{
-		Name:  "Marc",
+		Name:  &name,
 		Age:   250,
 		Email: "abc@gmail.com",
 		Address: Address{Zip: 20},

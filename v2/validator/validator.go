@@ -40,14 +40,6 @@ func Struct(v interface{}) goliath.Error {
 
 		for _, err := range err.(validator.ValidationErrors) {
 			jsonKey := getInvalidJsonKey(v, err.StructNamespace())
-
-			if err.Kind() == reflect.String {
-				v := reflect.ValueOf(err.Value()).String()
-				if v == "" && err.ActualTag() != "required" {
-					continue
-				}
-			}
-
 			errDetails = append(errDetails, errorArgs{
 				Key:           jsonKey,
 				ActualValue:   err.Value(),
