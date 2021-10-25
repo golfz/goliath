@@ -30,6 +30,9 @@ type Goliath interface {
 
 	// LogID returns `string`.
 	LogID() string
+
+	// NewInternalError return `*goliathError`
+	NewInternalError(errCode string, errArgs map[string]interface{}, err error, optionalMsg string) *goliathError
 }
 
 type goliath struct {
@@ -81,4 +84,9 @@ func (g *goliath) SetLogID(logID string) {
 
 func (g *goliath) LogID() string {
 	return g.logID
+}
+
+func (g *goliath) NewInternalError(errCode string, errArgs map[string]interface{}, err error, optionalMsg string) *goliathError {
+	errStatus := http.StatusInternalServerError
+	return NewError(errStatus, errCode, errArgs, err, g.logID, optionalMsg)
 }
