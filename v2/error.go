@@ -1,6 +1,7 @@
 package goliath
 
 import (
+	"errors"
 	"runtime/debug"
 	"time"
 )
@@ -46,6 +47,9 @@ type errorDev struct {
 
 // NewError create a new goliathError
 func NewError(status int, errCode string, errArgs map[string]interface{}, err error, logID string, optionalMsg string) *goliathError {
+	if err == nil {
+		err = errors.New(errCode)
+	}
 	return &goliathError{
 		Status:    status,
 		Message:   optionalMsg,
