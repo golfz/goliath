@@ -13,7 +13,7 @@ type user struct {
 	Age     uint8   `validate:"gte=18,lte=130"`
 	Email   string  `validate:"required,email"`
 	Address address
-	Phone   []phone
+	Phone   []phone `validate:"required,dive,required"`
 }
 
 type address struct {
@@ -52,14 +52,6 @@ type validationErrorCase struct {
 	Message       string      `json:"message"`
 }
 
-// testCase for table test
-type testCase struct {
-	name          string
-	input         interface{}
-	expectedError goliathErrorStruct
-	errArgs       int
-}
-
 func TestStruct_NoError(t *testing.T) {
 	name := "Tom"
 	u := user{
@@ -67,6 +59,9 @@ func TestStruct_NoError(t *testing.T) {
 		Age:     35,
 		Email:   "tom@email.com",
 		Address: address{Zip: 20000},
+		Phone: []phone{
+			{Number: "1234567"},
+		},
 	}
 
 	got := Struct(u)
@@ -87,10 +82,64 @@ func TestStruct_InvalidValidationError(t *testing.T) {
 
 func TestStruct_ValidationErrors(t *testing.T) {
 	u := user{
-		Name:    nil,
+		Name:    nil, // error : required
+		Age:     0,   // error lte
+		Email:   "tom@email.com",
+		Address: address{Zip: 20000},
+		Phone: []phone{
+			{Number: "1234567"},
+		},
+	}
+
+	err := Struct(u)
+	gErr := getGoliathErrorStruct(err)
+
+	expectedErrCode := "goliath.validate.Struct.ValidationErrors"
+	expectedErrItems := 2
+	if gErr.ErrorCode != expectedErrCode {
+		t.Errorf("expect err code = %v, got = %v", expectedErrCode, gErr.ErrorCode)
+	}
+	if len(gErr.ErrorArgs.ValidationErrors) != expectedErrItems {
+		t.Errorf("expect err items = %v, got = %v", expectedErrItems, len(gErr.ErrorArgs.ValidationErrors))
+	}
+}
+
+func TestStruct_ValidationErrors_SubKey(t *testing.T) {
+	tom := "Tom"
+	u := user{
+		Name:    &tom,
+		Age:     35,
+		Email:   "tom@email.com",
+		Address: address{Zip: 100},
+		Phone: []phone{
+			{Number: "1234567"},
+		},
+	}
+
+	err := Struct(u)
+	gErr := getGoliathErrorStruct(err)
+
+	expectedErrCode := "goliath.validate.Struct.ValidationErrors"
+	expectedErrItems := 1
+	if gErr.ErrorCode != expectedErrCode {
+		t.Errorf("expect err code = %v, got = %v", expectedErrCode, gErr.ErrorCode)
+	}
+	if len(gErr.ErrorArgs.ValidationErrors) != expectedErrItems {
+		t.Errorf("expect err items = %v, got = %v", expectedErrItems, len(gErr.ErrorArgs.ValidationErrors))
+	}
+}
+
+func TestStruct_ValidationErrors_Array(t *testing.T) {
+	tom := "Tom"
+	u := user{
+		Name:    &tom,
 		Age:     35,
 		Email:   "tom@email.com",
 		Address: address{Zip: 20000},
+		Phone: []phone{
+			{Number: "1234567"},
+			{Number: "123"}, // error
+		},
 	}
 
 	err := Struct(u)
@@ -112,7 +161,10 @@ func getGoliathErrorStruct(gotError goliath.Error) goliathErrorStruct {
 		panic(err)
 	}
 	var goliathError goliathErrorStruct
-	json.Unmarshal(b, &goliathError)
+	err = json.Unmarshal(b, &goliathError)
+	if err != nil {
+		panic(err)
+	}
 
 	return goliathError
 }
