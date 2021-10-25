@@ -43,7 +43,9 @@ type goliath struct {
 }
 
 func New() Goliath {
-	return &goliath{}
+	return &goliath{
+		sqlDBMap: make(map[string]*sql.DB),
+	}
 }
 
 func (g *goliath) SetRequest(r *http.Request) {
