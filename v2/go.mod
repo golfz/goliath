@@ -2,10 +2,7 @@ module github.com/golfz/goliath/v2
 
 go 1.17
 
-require (
-	github.com/davecgh/go-spew v1.1.1
-	github.com/go-playground/validator/v10 v10.9.0
-)
+require github.com/go-playground/validator/v10 v10.9.0
 
 require (
 	github.com/go-playground/locales v0.14.0 // indirect
