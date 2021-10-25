@@ -2,15 +2,16 @@ package goliath
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 )
 
 type Goliath interface {
-	// Request returns `*http.Request`.
-	Request() *http.Request
-
 	// SetRequest sets `*http.Request`.
 	SetRequest(r *http.Request)
+
+	// Request returns `*http.Request`.
+	Request() *http.Request
 
 	// SetResponseWriter sets `http.ResponseWriter`.
 	SetResponseWriter(w http.ResponseWriter)
@@ -18,11 +19,11 @@ type Goliath interface {
 	// Response returns `http.ResponseWriter`.
 	Response() http.ResponseWriter
 
-	// SetDBConnection sets `*sql.DB`
-	SetDBConnection(db *sql.DB)
+	// SetSqlDB sets map of `string -> *sql.DB`
+	SetSqlDB(id string, db *sql.DB)
 
 	// DB returns `*sql.DB`
-	DB() *sql.DB
+	sqlDB(id string) (*sql.DB, error)
 
 	// SetLogID sets `string`.
 	SetLogID(logID string)
@@ -32,18 +33,14 @@ type Goliath interface {
 }
 
 type goliath struct {
-	writer  http.ResponseWriter
-	request *http.Request
-	db      *sql.DB
-	logID   string
+	writer   http.ResponseWriter
+	request  *http.Request
+	sqlDBMap map[string]*sql.DB
+	logID    string
 }
 
 func New() Goliath {
 	return &goliath{}
-}
-
-func (g *goliath) Request() *http.Request {
-	return g.request
 }
 
 func (g *goliath) SetRequest(r *http.Request) {
@@ -54,6 +51,10 @@ func (g *goliath) SetRequest(r *http.Request) {
 	}
 }
 
+func (g *goliath) Request() *http.Request {
+	return g.request
+}
+
 func (g *goliath) SetResponseWriter(w http.ResponseWriter) {
 	g.writer = w
 }
@@ -62,12 +63,16 @@ func (g *goliath) Response() http.ResponseWriter {
 	return g.writer
 }
 
-func (g *goliath) SetDBConnection(db *sql.DB) {
-	g.db = db
+func (g *goliath) SetSqlDB(id string, db *sql.DB) {
+	g.sqlDBMap[id] = db
 }
 
-func (g *goliath) DB() *sql.DB {
-	return g.db
+func (g *goliath) sqlDB(id string) (*sql.DB, error) {
+	db, ok := g.sqlDBMap[id]
+	if !ok {
+		return nil, fmt.Errorf("no sqlDB with id: %s", id)
+	}
+	return db, nil
 }
 
 func (g *goliath) SetLogID(logID string) {
