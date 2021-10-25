@@ -71,23 +71,16 @@ func TestStruct_NoError(t *testing.T) {
 }
 
 func TestStruct_InvalidValidationError(t *testing.T) {
-	tc := testCase{
-		name:  "nil input",
-		input: nil,
-		expectedError: GoliathErrorStruct{
-			ErrorCode: "goliath.validate.Struct.InvalidValidationError",
-		},
-		errArgs: 0,
-	}
-
-	gotErr := Struct(tc.input)
+	gotErr := Struct(nil)
 	b, err := json.Marshal(gotErr)
 	if err != nil {
 		panic(err)
 	}
-	var gErrStruct GoliathErrorStruct
-	json.Unmarshal(b, &gErrStruct)
-	if gErrStruct.ErrorCode != tc.expectedError.ErrorCode {
-		t.Errorf("Expected %v, got %v", gErrStruct.ErrorCode, tc.expectedError.ErrorCode)
+	var goliathError GoliathErrorStruct
+	json.Unmarshal(b, &goliathError)
+
+	expectedErrCode := "goliath.validate.Struct.InvalidValidationError"
+	if goliathError.ErrorCode != expectedErrCode {
+		t.Errorf("Expected %v, got %v", expectedErrCode, goliathError.ErrorCode)
 	}
 }
