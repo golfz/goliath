@@ -2,6 +2,7 @@ package validate
 
 import (
 	"encoding/json"
+	"github.com/golfz/goliath/v2"
 	"testing"
 	"time"
 )
@@ -72,15 +73,36 @@ func TestStruct_NoError(t *testing.T) {
 
 func TestStruct_InvalidValidationError(t *testing.T) {
 	gotErr := Struct(nil)
-	b, err := json.Marshal(gotErr)
+	goliathError := getGoliathErrorStruct(gotErr)
+
+	expectedErrCode := "goliath.validate.Struct.InvalidValidationError"
+	if goliathError.ErrorCode != expectedErrCode {
+		t.Errorf("Expected %v, got %v", expectedErrCode, goliathError.ErrorCode)
+	}
+}
+
+func TestStruct_ValidationErrors(t *testing.T) {
+	u := user{
+		Name:    nil,
+		Age:     35,
+		Email:   "tom@email.com",
+		Address: address{Zip: 20000},
+	}
+
+	gotErr := Struct(u)
+	if gotErr != nil {
+		t.Errorf("expect = %v, got = %v", nil, gotErr)
+	}
+
+}
+
+func getGoliathErrorStruct(gotError goliath.Error) GoliathErrorStruct {
+	b, err := json.Marshal(gotError)
 	if err != nil {
 		panic(err)
 	}
 	var goliathError GoliathErrorStruct
 	json.Unmarshal(b, &goliathError)
 
-	expectedErrCode := "goliath.validate.Struct.InvalidValidationError"
-	if goliathError.ErrorCode != expectedErrCode {
-		t.Errorf("Expected %v, got %v", expectedErrCode, goliathError.ErrorCode)
-	}
+	return goliathError
 }
