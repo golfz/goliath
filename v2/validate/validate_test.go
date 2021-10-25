@@ -49,31 +49,45 @@ type ValidationErrorCase struct {
 
 // testCase for table test
 type testCase struct {
-	name    string
-	input   interface{}
-	want    GoliathErrorStruct
-	errArgs int
+	name          string
+	input         interface{}
+	expectedError GoliathErrorStruct
+	errArgs       int
+}
+
+func TestStruct_NoError(t *testing.T) {
+	name := "Tom"
+	u := user{
+		Name:    &name,
+		Age:     35,
+		Email:   "tom@email.com",
+		Address: address{Zip: 20000},
+	}
+
+	got := Struct(u)
+	if got != nil {
+		t.Errorf("expect = %v, got = %v", nil, got)
+	}
 }
 
 func TestStruct_InvalidValidationError(t *testing.T) {
 	tc := testCase{
 		name:  "nil input",
 		input: nil,
-		want: GoliathErrorStruct{
+		expectedError: GoliathErrorStruct{
 			ErrorCode: "goliath.validate.Struct.InvalidValidationError",
 		},
 		errArgs: 0,
 	}
 
-	got := Struct(tc.input)
-	b, err := json.Marshal(got)
+	gotErr := Struct(tc.input)
+	b, err := json.Marshal(gotErr)
 	if err != nil {
 		panic(err)
 	}
 	var gErrStruct GoliathErrorStruct
 	json.Unmarshal(b, &gErrStruct)
-	if gErrStruct.ErrorCode != tc.want.ErrorCode {
-		t.Errorf("Expected %v, got %v", gErrStruct.ErrorCode, tc.want.ErrorCode)
+	if gErrStruct.ErrorCode != tc.expectedError.ErrorCode {
+		t.Errorf("Expected %v, got %v", gErrStruct.ErrorCode, tc.expectedError.ErrorCode)
 	}
-
 }
