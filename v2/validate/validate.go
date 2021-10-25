@@ -18,6 +18,7 @@ type errorArgs struct {
 	Message       string      `json:"message"`
 }
 
+// Struct validate struct data
 func Struct(v interface{}) goliath.Error {
 	if err := validator.New().Struct(v); err != nil {
 
