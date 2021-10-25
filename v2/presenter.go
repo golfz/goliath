@@ -8,11 +8,13 @@ type ErrorPresenterInterface interface {
 
 type ErrorPresenter struct {
 	View Viewer
+	Ctx  Goliath
 }
 
 func (p *ErrorPresenter) PresentError(err Error) {
-	e := getGoliathError(err)
-	p.View.Write(e.Status, err)
+	err.SetLogID(p.Ctx.LogID())
+	status := getGoliathError(err).Status
+	p.View.Write(status, err)
 }
 
 func getGoliathError(errInf Error) goliathError {
