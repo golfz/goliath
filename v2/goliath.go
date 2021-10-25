@@ -28,6 +28,12 @@ type Goliath interface {
 	// SetLogID sets `string`.
 	SetLogID(logID string)
 
+	// LogIDKey returns `string`.
+	LogIDKey() string
+
+	// SetLogIDKey sets `string`.
+	SetLogIDKey(key string)
+
 	// LogID returns `string`.
 	LogID() string
 
@@ -40,6 +46,7 @@ type goliath struct {
 	request  *http.Request
 	sqlDBMap map[string]*sql.DB
 	logID    string
+	logIdKey string
 }
 
 func New() Goliath {
@@ -50,7 +57,13 @@ func New() Goliath {
 
 func (g *goliath) SetRequest(r *http.Request) {
 	g.request = r
-	logID, ok := g.request.Context().Value(ContextLogIdKey).(string)
+
+	key := ContextLogIdKey
+	if g.logIdKey != "" {
+		key = g.logIdKey
+	}
+
+	logID, ok := g.request.Context().Value(key).(string)
 	if ok {
 		g.logID = logID
 	}
@@ -86,6 +99,14 @@ func (g *goliath) SetLogID(logID string) {
 
 func (g *goliath) LogID() string {
 	return g.logID
+}
+
+func (g *goliath) LogIDKey() string {
+	return g.logIdKey
+}
+
+func (g *goliath) SetLogIDKey(key string) {
+	g.logIdKey = key
 }
 
 func (g *goliath) NewInternalError(errCode string, errArgs map[string]interface{}, err error, optionalMsg string) *goliathError {
