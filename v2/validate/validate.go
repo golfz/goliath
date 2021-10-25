@@ -1,4 +1,4 @@
-package validator
+package validate
 
 import (
 	"fmt"
@@ -30,7 +30,7 @@ func Struct(v interface{}) goliath.Error {
 		)
 
 		if _, ok := err.(*validator.InvalidValidationError); ok {
-			errCode = "goliath.validator.Struct.InvalidValidationError"
+			errCode = "goliath.validate.Struct.InvalidValidationError"
 			errArgs = nil
 			errMessage = "invalid validation error"
 			return goliath.NewError(errStatus, errCode, errArgs, err, logID, errMessage)
@@ -51,7 +51,7 @@ func Struct(v interface{}) goliath.Error {
 		}
 
 		if errDetails != nil {
-			errCode = "goliath.validator.Struct.ValidationErrors"
+			errCode = "goliath.validate.Struct.ValidationErrors"
 			errArgs = map[string]interface{}{"validation_errors": errDetails}
 			errMessage = "validation errors"
 			return goliath.NewError(errStatus, errCode, errArgs, err, logID, errMessage)
