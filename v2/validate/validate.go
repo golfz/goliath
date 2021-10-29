@@ -2,12 +2,13 @@ package validate
 
 import (
 	"fmt"
-	"github.com/go-playground/validator/v10"
-	"github.com/golfz/goliath/v2"
 	"net/http"
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/golfz/goliath/v2"
 )
 
 type errorArgs struct {

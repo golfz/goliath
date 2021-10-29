@@ -1,6 +1,6 @@
 package goliath
 
 const (
-	ContextLogIdKey = "GoliathContextLogIdKey"
+	// ContextLogIDKey is default log id key for context
+	ContextLogIDKey = "GoliathContextLogIdKey"
 )
-

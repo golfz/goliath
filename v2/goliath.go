@@ -58,7 +58,7 @@ func New() Goliath {
 func (g *goliath) SetRequest(r *http.Request) {
 	g.request = r
 
-	key := ContextLogIdKey
+	key := ContextLogIDKey
 	if g.logIdKey != "" {
 		key = g.logIdKey
 	}

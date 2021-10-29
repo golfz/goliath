@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Error is goliath error interface
 type Error interface {
 	// SetStatus sets `int`
 	SetStatus(status int)
