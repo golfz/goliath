@@ -1,9 +1,10 @@
 package mapper
 
 import (
+	"net/http"
+
 	"github.com/golfz/goliath/v2"
 	"github.com/jinzhu/copier"
-	"net/http"
 )
 
 type structMapper struct {

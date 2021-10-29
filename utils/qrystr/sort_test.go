@@ -140,13 +140,13 @@ func TestGetSort_SuccessWith2Field(t *testing.T) {
 
 func TestQueryString_GetSortSql(t *testing.T) {
 	type args struct {
-		uriTarget string
+		uriTarget         string
 		isNeedSortKeyword bool
 	}
 	tests := []struct {
-		name   string
-		args   args
-		want   string
+		name string
+		args args
+		want string
 	}{
 		{
 			name: "no sort",

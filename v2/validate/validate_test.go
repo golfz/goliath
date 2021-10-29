@@ -2,9 +2,10 @@ package validate
 
 import (
 	"encoding/json"
-	"github.com/golfz/goliath/v2"
 	"testing"
 	"time"
+
+	"github.com/golfz/goliath/v2"
 )
 
 // user is input

@@ -54,20 +54,20 @@ func TestGetFilter_MultiFilter(t *testing.T) {
 		{
 			Field: "name",
 			Condition: []FilterFieldCondition{
-				{Operator: "like", Values:   []string{"mi"}},
+				{Operator: "like", Values: []string{"mi"}},
 			},
 		},
 		{
 			Field: "age",
 			Condition: []FilterFieldCondition{
-				{Operator: "gte", Values:   []string{"30"}},
-				{Operator: "lt", Values:   []string{"40"}},
+				{Operator: "gte", Values: []string{"30"}},
+				{Operator: "lt", Values: []string{"40"}},
 			},
 		},
 		{
 			Field: "country",
 			Condition: []FilterFieldCondition{
-				{Operator: "in", Values:   []string{"thailand", "usa"}},
+				{Operator: "in", Values: []string{"thailand", "usa"}},
 			},
 		},
 	}
@@ -87,20 +87,20 @@ func TestGetFilter_OrderFieldName_MultiFilter(t *testing.T) {
 		{
 			Field: "age",
 			Condition: []FilterFieldCondition{
-				{Operator: "gte", Values:   []string{"30"}},
-				{Operator: "lt", Values:   []string{"40"}},
+				{Operator: "gte", Values: []string{"30"}},
+				{Operator: "lt", Values: []string{"40"}},
 			},
 		},
 		{
 			Field: "country",
 			Condition: []FilterFieldCondition{
-				{Operator: "in", Values:   []string{"thailand", "usa"}},
+				{Operator: "in", Values: []string{"thailand", "usa"}},
 			},
 		},
 		{
 			Field: "name",
 			Condition: []FilterFieldCondition{
-				{Operator: "like", Values:   []string{"mi"}},
+				{Operator: "like", Values: []string{"mi"}},
 			},
 		},
 	}
@@ -116,14 +116,14 @@ func TestGetFilter_MultiFilter_SomeTagValueInvalid(t *testing.T) {
 		{
 			Field: "name",
 			Condition: []FilterFieldCondition{
-				{Operator: "like", Values:   []string{"mi"}},
+				{Operator: "like", Values: []string{"mi"}},
 			},
 		},
 		{
 			Field: "age",
 			Condition: []FilterFieldCondition{
-				{Operator: "gte", Values:   []string{"30"}},
-				{Operator: "lt", Values:   []string{"40"}},
+				{Operator: "gte", Values: []string{"30"}},
+				{Operator: "lt", Values: []string{"40"}},
 			},
 		},
 	}
@@ -142,7 +142,7 @@ func TestGetFilter_MultiFilter_SomeFieldValueInvalid(t *testing.T) {
 		{
 			Field: "name",
 			Condition: []FilterFieldCondition{
-				{Operator: "like", Values:   []string{"mi"}},
+				{Operator: "like", Values: []string{"mi"}},
 			},
 		},
 	}
@@ -284,18 +284,18 @@ func TestGetFilterFieldCondition_Not(t *testing.T) {
 
 func TestQueryString_GetFilterSql(t *testing.T) {
 	type args struct {
-		uriTarget string
+		uriTarget          string
 		isNeedWhereKeyword bool
 	}
 	tests := []struct {
-		name   string
-		args   args
-		want   string
+		name string
+		args args
+		want string
 	}{
 		{
 			name: "no filter",
 			args: args{
-				uriTarget:         "/user?sort_by=name:asc",
+				uriTarget:          "/user?sort_by=name:asc",
 				isNeedWhereKeyword: true,
 			},
 			want: "",
@@ -303,7 +303,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "eq without WHERE",
 			args: args{
-				uriTarget:         "/user?age=eq:25",
+				uriTarget:          "/user?age=eq:25",
 				isNeedWhereKeyword: false,
 			},
 			want: " `age` = '25' ",
@@ -311,7 +311,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "eq with WHERE",
 			args: args{
-				uriTarget:         "/user?age=eq:25",
+				uriTarget:          "/user?age=eq:25",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `age` = '25' ",
@@ -319,7 +319,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "not with WHERE",
 			args: args{
-				uriTarget:         "/user?age=not:25",
+				uriTarget:          "/user?age=not:25",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `age` <> '25' ",
@@ -327,7 +327,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "gt with WHERE",
 			args: args{
-				uriTarget:         "/user?age=gt:25",
+				uriTarget:          "/user?age=gt:25",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `age` > '25' ",
@@ -335,7 +335,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "gte with WHERE",
 			args: args{
-				uriTarget:         "/user?age=gte:25",
+				uriTarget:          "/user?age=gte:25",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `age` >= '25' ",
@@ -343,7 +343,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "lt with WHERE",
 			args: args{
-				uriTarget:         "/user?age=lt:25",
+				uriTarget:          "/user?age=lt:25",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `age` < '25' ",
@@ -351,7 +351,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "lte with WHERE",
 			args: args{
-				uriTarget:         "/user?age=lte:25",
+				uriTarget:          "/user?age=lte:25",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `age` <= '25' ",
@@ -359,7 +359,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "like no wildcard",
 			args: args{
-				uriTarget:         "/user?name=like:tom",
+				uriTarget:          "/user?name=like:tom",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `name` LIKE 'tom' ",
@@ -367,7 +367,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "like with wildcard",
 			args: args{
-				uriTarget:         "/user?name=like:~tom_s~",
+				uriTarget:          "/user?name=like:~tom_s~",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `name` LIKE '%tom_s%' ",
@@ -375,7 +375,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "is null",
 			args: args{
-				uriTarget:         "/user?name=is:null",
+				uriTarget:          "/user?name=is:null",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `name` IS NULL ",
@@ -383,7 +383,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "is notnull",
 			args: args{
-				uriTarget:         "/user?name=is:notnull",
+				uriTarget:          "/user?name=is:notnull",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `name` IS NOT NULL ",
@@ -391,7 +391,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "in with 1 element",
 			args: args{
-				uriTarget:         "/user?country=in:thailand",
+				uriTarget:          "/user?country=in:thailand",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `country` IN ('thailand') ",
@@ -399,7 +399,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "in with 2 element",
 			args: args{
-				uriTarget:         "/user?country=in:thailand%2Busa",
+				uriTarget:          "/user?country=in:thailand%2Busa",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `country` IN ('thailand', 'usa') ",
@@ -407,7 +407,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "in with 3 element",
 			args: args{
-				uriTarget:         "/user?country=in:thailand%2Busa%2Bcanada",
+				uriTarget:          "/user?country=in:thailand%2Busa%2Bcanada",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `country` IN ('thailand', 'usa', 'canada') ",
@@ -415,7 +415,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "eq + in with 3 element",
 			args: args{
-				uriTarget:         "/user?age=eq:25&country=in:thailand%2Busa%2Bcanada",
+				uriTarget:          "/user?age=eq:25&country=in:thailand%2Busa%2Bcanada",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `age` = '25' AND `country` IN ('thailand', 'usa', 'canada') ",
@@ -423,7 +423,7 @@ func TestQueryString_GetFilterSql(t *testing.T) {
 		{
 			name: "eq + is + like + in with 3 element",
 			args: args{
-				uriTarget:         "/user?age=gte:20,lt:30&org=is:null&com=is:notnull&name=like:~tom_s~&country=in:thailand%2Busa%2Bcanada",
+				uriTarget:          "/user?age=gte:20,lt:30&org=is:null&com=is:notnull&name=like:~tom_s~&country=in:thailand%2Busa%2Bcanada",
 				isNeedWhereKeyword: true,
 			},
 			want: " WHERE `age` >= '20' AND `age` < '30' AND `com` IS NOT NULL AND `country` IN ('thailand', 'usa', 'canada') AND `name` LIKE '%tom_s%' AND `org` IS NULL ",

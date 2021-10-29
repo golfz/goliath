@@ -23,7 +23,7 @@ func (t *Time) ChangeTimezone(tz string) (time.Time, output.GoliathError) {
 	localTime, err := time.Parse(time.RFC3339, localTimeString)
 
 	if err != nil {
-		return time.Time{}, &output.Error {
+		return time.Time{}, &output.Error{
 			Status:  http.StatusInternalServerError,
 			Time:    time.Now(),
 			Type:    "utils",

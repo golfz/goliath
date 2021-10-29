@@ -27,12 +27,12 @@ func (s *structMapper) To(v interface{}) output.GoliathError {
 		stack := string(debug.Stack())
 		errorStr := fmt.Sprint(err)
 		return &output.Error{
-			Status:   http.StatusInternalServerError,
-			Time:     time.Now(),
-			Type:     "internal",
-			Code:     "internal-mapstruct",
-			Error:    "Something wrong",
-			Message:  "Something wrong (cannot mapping data).",
+			Status:  http.StatusInternalServerError,
+			Time:    time.Now(),
+			Type:    "internal",
+			Code:    "internal-mapstruct",
+			Error:   "Something wrong",
+			Message: "Something wrong (cannot mapping data).",
 			ErrorDev: output.ErrorDev{
 				Error:      errorStr,
 				Stacktrace: stack,
