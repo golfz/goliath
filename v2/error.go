@@ -37,7 +37,7 @@ type goliathError struct {
 	LogID     string                 `json:"log_id"`
 	ErrorCode string                 `json:"error_code"`
 	ErrorArgs map[string]interface{} `json:"error_args"`
-	ErrorDev  errorDev               `json:"error_dev"`
+	ErrorDev  errorDev               `json:"-"`
 	err       error
 }
 
