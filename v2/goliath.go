@@ -22,8 +22,8 @@ type Goliath interface {
 	// SetSqlDB sets map of `string -> *sql.DB`
 	SetSqlDB(id string, db *sql.DB)
 
-	// DB returns `*sql.DB`
-	sqlDB(id string) (*sql.DB, error)
+	// SqlDB returns `*sql.DB`
+	SqlDB(id string) (*sql.DB, error)
 
 	// SetLogID sets `string`.
 	SetLogID(logID string)
@@ -85,7 +85,7 @@ func (g *goliath) SetSqlDB(id string, db *sql.DB) {
 	g.sqlDBMap[id] = db
 }
 
-func (g *goliath) sqlDB(id string) (*sql.DB, error) {
+func (g *goliath) SqlDB(id string) (*sql.DB, error) {
 	db, ok := g.sqlDBMap[id]
 	if !ok {
 		return nil, fmt.Errorf("no sqlDB with id: %s", id)
