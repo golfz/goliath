@@ -39,6 +39,12 @@ type Goliath interface {
 
 	// NewInternalError return `*goliathError`
 	NewInternalError(errCode string, errArgs map[string]interface{}, err error, optionalMsg string) *goliathError
+
+	// SetValue sets `interface{}`.
+	SetValue(key string, value interface{})
+
+	// GetValue returns `(interface{}, bool)`.
+	GetValue(key string) (interface{}, bool)
 }
 
 type goliath struct {
@@ -47,11 +53,13 @@ type goliath struct {
 	sqlDBMap map[string]*sql.DB
 	logID    string
 	logIdKey string
+	valueMap map[string]interface{}
 }
 
 func New() Goliath {
 	return &goliath{
 		sqlDBMap: make(map[string]*sql.DB),
+		valueMap: make(map[string]interface{}),
 	}
 }
 
@@ -112,4 +120,13 @@ func (g *goliath) SetLogIDKey(key string) {
 func (g *goliath) NewInternalError(errCode string, errArgs map[string]interface{}, err error, optionalMsg string) *goliathError {
 	errStatus := http.StatusInternalServerError
 	return NewError(errStatus, errCode, errArgs, err, g.logID, optionalMsg)
+}
+
+func (g *goliath) SetValue(key string, value interface{}) {
+	g.valueMap[key] = value
+}
+
+func (g *goliath) GetValue(key string) (interface{}, bool) {
+	v, ok := g.valueMap[key]
+	return v, ok
 }
