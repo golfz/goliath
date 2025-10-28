@@ -2,9 +2,10 @@ package timeutils
 
 import (
 	"fmt"
-	"github.com/golfz/goliath/v2"
 	"net/http"
 	"time"
+
+	"github.com/golfz/goliath/v2"
 )
 
 type TimeUtils struct {

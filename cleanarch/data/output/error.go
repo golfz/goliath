@@ -1,9 +1,10 @@
 package output
 
 import (
-	"github.com/golfz/goliath/utils/contexts"
 	"runtime/debug"
 	"time"
+
+	"github.com/golfz/goliath/utils/contexts"
 )
 
 type GoliathError interface {

@@ -2,14 +2,15 @@ package validator
 
 import (
 	"fmt"
-	"github.com/go-playground/validator/v10"
-	"github.com/golfz/goliath/cleanarch/data/output"
 	"net/http"
 	"reflect"
 	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/golfz/goliath/cleanarch/data/output"
 )
 
 func Validate(v interface{}) output.GoliathError {

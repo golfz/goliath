@@ -2,6 +2,7 @@ package json
 
 import (
 	"encoding/json"
+
 	"github.com/golfz/goliath/cleanarch/data/viewmodel"
 	"github.com/golfz/goliath/utils/contexts"
 )

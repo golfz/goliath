@@ -1,11 +1,12 @@
 package contexts
 
 import (
-	"github.com/golfz/goliath/cleanarch/data/output"
 	"net/http"
 	"runtime/debug"
 	"strings"
 	"time"
+
+	"github.com/golfz/goliath/cleanarch/data/output"
 )
 
 type authContext struct {

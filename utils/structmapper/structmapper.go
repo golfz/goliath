@@ -2,11 +2,12 @@ package structmapper
 
 import (
 	"fmt"
-	"github.com/golfz/goliath/cleanarch/data/output"
-	"github.com/jinzhu/copier"
 	"net/http"
 	"runtime/debug"
 	"time"
+
+	"github.com/golfz/goliath/cleanarch/data/output"
+	"github.com/jinzhu/copier"
 )
 
 type structMapper struct {

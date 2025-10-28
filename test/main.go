@@ -3,10 +3,11 @@ package test
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+
 	"github.com/golfz/goliath/cleanarch/data/viewmodel"
 	"github.com/golfz/goliath/utils/structmapper"
 	"github.com/golfz/goliath/utils/validator"
-	"log"
 )
 
 type TestStruct struct {

@@ -1,9 +1,10 @@
 package qrystr
 
 import (
-	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // **********************************************

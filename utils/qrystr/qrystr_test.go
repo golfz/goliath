@@ -1,11 +1,12 @@
 package qrystr
 
 import (
-	"github.com/golfz/goliath/utils/sliceutils"
-	"github.com/openlyinc/pointy"
-	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/golfz/goliath/utils/sliceutils"
+	"github.com/stretchr/testify/assert"
+	"go.openly.dev/pointy"
 )
 
 func Test_GetStandardLimitAndSortFieldList(t *testing.T) {

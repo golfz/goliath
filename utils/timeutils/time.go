@@ -2,10 +2,11 @@ package timeutils
 
 import (
 	"fmt"
-	"github.com/golfz/goliath/cleanarch/data/output"
 	"net/http"
 	"runtime/debug"
 	"time"
+
+	"github.com/golfz/goliath/cleanarch/data/output"
 )
 
 type Time struct {
